@@ -30,7 +30,7 @@ func CaptureOutput(f func()) string {
 	return capturer.capture(f)
 }
 
-func (capturer *Capturer) capture(f func()) string {
+func (capturer *Capturer) capture(f func()) []byte {
 	r, w, err := os.Pipe()
 	if err != nil {
 		panic(err)
@@ -58,5 +58,5 @@ func (capturer *Capturer) capture(f func()) string {
 	var buf bytes.Buffer
 	io.Copy(&buf, r)
 
-	return buf.String()
+	return buf
 }
