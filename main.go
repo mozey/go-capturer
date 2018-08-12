@@ -13,19 +13,19 @@ type Capturer struct {
 }
 
 // CaptureStdout captures stdout.
-func CaptureStdout(f func()) string {
+func CaptureStdout(f func()) []byte {
 	capturer := &Capturer{captureStdout: true}
 	return capturer.capture(f)
 }
 
 // CaptureStderr captures stderr.
-func CaptureStderr(f func()) string {
+func CaptureStderr(f func()) []byte {
 	capturer := &Capturer{captureStderr: true}
 	return capturer.capture(f)
 }
 
 // CaptureOutput captures stdout and stderr.
-func CaptureOutput(f func()) string {
+func CaptureOutput(f func()) []byte {
 	capturer := &Capturer{captureStdout: true, captureStderr: true}
 	return capturer.capture(f)
 }
@@ -58,5 +58,5 @@ func (capturer *Capturer) capture(f func()) []byte {
 	var buf bytes.Buffer
 	io.Copy(&buf, r)
 
-	return buf
+	return buf.Bytes()
 }
